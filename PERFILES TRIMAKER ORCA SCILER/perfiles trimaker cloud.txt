@@ -1,0 +1,48 @@
+# ============================
+# Fuzion3D - Trimaker Cloud 8bits
+# Diseñado y compilado por Fuzion3D
+# ============================
+
+M190 S{material_bed_temperature_layer_0} ; Esperar cama
+M109 S{material_print_temperature_layer_0} ; Esperar hotend
+
+G28 ; Home de todos los ejes
+G90 ; Coordenadas absolutas
+
+# --- OPCIÓN 1: Auto mesh cada impresión ---
+#BED_MESH_CLEAR
+#BED_MESH_CALIBRATE
+
+# --- OPCIÓN 2: Usar mesh guardado (recomendado) ---
+BED_MESH_PROFILE LOAD=default
+
+G1 Z10 F6000 ; Elevar cabezal
+G92 E0 ; Reset extrusor
+
+; --- Línea de purga personalizada Fuzion3D ---
+G1 X2 Y10 F3000
+G1 Z0.3 F1200
+G1 X200 E20 F1500 ; Línea recta purgando
+G1 Z2 F6000
+G92 E0
+[18:01, 3/9/2025] +54 9 3417 21-0184: # ============================
+# Fuzion3D - Trimaker Cloud 8bits
+# Final de impresión
+# ============================
+
+M400 ; Esperar a que termine todo
+G92 E0
+G1 E-3 F300 ; Retraer filamento
+
+M104 S0 ; Apagar hotend
+M140 S0 ; Apagar cama
+
+G91 ; Movimiento relativo
+G1 Z10 F3000 ; Subir cabezal
+G90 ; Volver a absoluto
+
+G1 X0 Y200 F4000 ; Llevar cama adelante y cabezal a la izquierda
+
+M84 ; Apagar motores
+
+# Impresión finalizada - Fuzion3D
